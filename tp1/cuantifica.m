@@ -1,4 +1,11 @@
+% N = Cantidad de niveles
+% x = Valores
 function[x]=cuantifica(x,N)
+% evita las funciones con valores negativos
+valmin=min(x);
+if( valmin < 0 ) 
+    x = x-valmin;
+end
 H=max(x)/N;
 for i=1:length(x)
     if (x(i)<0)
@@ -10,6 +17,9 @@ for i=1:length(x)
     if(x(i)>= (N-1)*H)
         x(i)=(N-1)*(H);
     end
+end
+if( valmin < 0 ) 
+    x = x+valmin;
 end
 end
 %[t,x]=senoidal(1,5,0,100,0,2);

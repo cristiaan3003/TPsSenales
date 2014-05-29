@@ -4,29 +4,70 @@
 %// x la funcion interpolada
 
 %//T=1/fm
-fm1=10; T1=1/fm1; t1=0:T1:(1-T1); N1=length(t1);
+fm1=10; 
+T1=1/fm1; 
+t1=0:T1:(1-T1); 
+N1=length(t1);
 y1=sin(2*pi*t1);
-figure(1)
-stem(t1,y1); title(' seno - fm=10');
+figure(1);
+subplot( 1, 2, 1 );
+stem(t1,y1); 
+title('Funcion seno - Fm = 10 Hz');
 
-fm2=40; 
+fm2=1000; 
 T2=1/fm2; 
 t2=0:T2:(1-T2); 
 N2=length(t2);
 y2=sin(2*pi*t2);
-figure(2)
+subplot( 1, 2, 2 );
 stem(t2,y2,'r-'); title(' seno - fm=40');
 
+
 %//interpolacion lineal
-x=zeros(1,N2)
-for i=1:N2
-  for j=1:N1
-   % x(i)=(y1(i))*lineal((t2(j)-(N1*T1))/T1);
-     x(i)=((y1(j)*(N1*T1))*lineal((t2(j)-(N1*T1))/T1))+x(i);
+x=zeros(1,N2);
+for i=1:N2  % m Sumatoria de los elementos de la frecuencia nueva
+  for j=1:N1 % n Sumatoria de los elementos de la frecuencia vieja
+    % mTi = Posición de la muestra en la escala de tiempo de la frecuencia
+    % nueva
+    % nT = Posición de la muestra en la escala de tiempo de la frecuencia
+    % vieja
+    % Diviendo por el periodo viejo nos normaliza la diferencia a la escala
+    % correcta
+    x(i)=( y1(j)) * lineal( ( t2(i) - t1(j) ) / T1 ) + x(i);
+    % Se hace la sumatoria porque lineal devuelve un vector no nulo en los
+    % lugares 0->1. Multiplicando por el valor anterior y1 que lo lleva a
+    % la "altura" correcta.
   end
 end
-figure(3)
-stem(t2,x,'g-'); title('Interp Lineal - seno  fm=40');
-  
+figure(2);
+subplot( 1, 2, 1 );
+plot( t2, x, 'g-' ); 
+title('Interpolacion Lineal - Seno  fm=40');
 
+figure(111)
+plot(abs(fft(y1)))
+figure(222)
+plot(abs(fft(x)))
+  
+% Interpolación Sinc
+
+xsinc=zeros(1,N2);
+for i=1:N2  % m Sumatoria de los elementos de la frecuencia nueva
+  for j=1:N1 % n Sumatoria de los elementos de la frecuencia vieja
+    % mTi = Posición de la muestra en la escala de tiempo de la frecuencia
+    % nueva
+    % nT = Posición de la muestra en la escala de tiempo de la frecuencia
+    % vieja
+    % Diviendo por el periodo viejo nos normaliza la diferencia a la escala
+    % correcta
+    xsinc(i)=( y1(j) ) * sinc( ( t2(i) - t1(j) ) / T1 ) + xsinc(i);
+    % Se hace la sumatoria porque lineal devuelve un vector no nulo en los
+    % lugares 0->1. Multiplicando por el valor anterior y1 que lo lleva a
+    % la "altura" correcta.
+  end
+end
+
+subplot( 1, 2, 2 );
+plot( t2, xsinc );
+title( 'Interpolacion Sinc - Seno Fm = 40 Hz' );
       

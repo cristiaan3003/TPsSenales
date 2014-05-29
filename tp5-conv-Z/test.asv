@@ -1,0 +1,18 @@
+close all
+ clear all
+ clc
+
+clear all
+close all
+clc
+[Z,P,K] = tf2zpk([2 -3 2],1)
+zplane(Z,P);
+fm = 10000;
+N = 10000;
+df=fm/N;
+k = 1:N;
+r=1
+z =r* exp((-1i*2*pi*k)/N);
+Hf = 2-3*z.^-1+2*z.^-2;
+sys=tf([2 -3 2],1)
+figure,plot(abs(Hf))

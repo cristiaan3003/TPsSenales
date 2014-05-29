@@ -1,0 +1,3 @@
+de la guia 7 no se porq carajo hacen ese truncamiento temporal en el ultimo ejercicio :s
+de la guia 9 :funcion sonoro_o_sordo() 
+de la guia 10, ejercicio 3 hice una pero faltan las distribuciones de choi-williams y de Wigner-Ville.

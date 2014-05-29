@@ -1,5 +1,5 @@
 %ejercicio 4
-[t,x]=senoidal(1,4000,0,2,129);
+[t,x]=senoidal( 1, 4000, 0, 129, 0, 2 );
 plot(t,x)
 %le representacion obtenida nos induce a pensar
 %que es una senoidal de 1 Hz, en lugar de los 4000Hz
